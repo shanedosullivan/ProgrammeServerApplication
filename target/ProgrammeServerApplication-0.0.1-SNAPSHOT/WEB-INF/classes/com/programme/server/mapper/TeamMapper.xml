@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.programme.server.mapper.TeamMapper">
+	
+	<resultMap id="teamResultMap" type="Team">
+		<id property="id" column="TEAM.ID"/>
+		<result property="name" column="TEAM.NAME" />
+	</resultMap>
+	
+	<select id="findAll" resultMap="teamResultMap">
+    	select id, name from programme.team
+	</select>
+	
+	<select id="retrieveTeam" parameterType="int" resultMap="teamResultMap">
+	    SELECT TEAM.ID, TEAM.NAME   
+		FROM PROGRAMME.TEAM
+		WHERE TEAM.ID=#{id};
+	</select>
+	
+	<select id="retrieveTeamId" parameterType="String" resultType="Integer">
+	    SELECT TEAM.ID
+		FROM PROGRAMME.TEAM
+		WHERE TEAM.NAME = #{team}
+	</select>
+	
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.programme.server.mapper.LiveScoreInfoMapper">
+    
+    <resultMap id="teamLiveScoreInfoResultMap" type="LiveScoreInfo">
+		<id property="id" column="TEAM.ID" />
+		<result property="points" column="TEAM.POINTS" />
+		<result property="goals" column="TEAM.GOALS" />
+		<result property="pointsDeadBall" column="TEAM.POINTSDEADBALL" />
+		<result property="goalsDeadBall" column="TEAM.GOALSDEADBALL" />
+		<result property="wides" column="TEAM.WIDES"/>
+	</resultMap>
+	
+	<select id="retrieveTeamLiveScoreInfo" parameterType="int" resultMap="teamLiveScoreInfoResultMap">
+	    SELECT TEAM.ID, TEAM.POINTS, TEAM.GOALS, TEAM.POINTSDEADBALL, TEAM.GOALSDEADBALL, TEAM.WIDES  
+		FROM PROGRAMME.TEAM
+		WHERE TEAM.ID=#{id};
+	</select>
+	
+	<resultMap id="playerLiveScoreInfoResultMap" type="LiveScoreInfo">
+		<id property="id" column="PLAYER.ID" />
+		<result property="points" column="PLAYER.POINTS" />
+		<result property="goals" column="PLAYER.GOALS" />
+		<result property="pointsDeadBall" column="PLAYER.POINTSDEADBALL" />
+		<result property="goalsDeadBall" column="PLAYER.GOALSDEADBALL" />
+		<result property="wides" column="PLAYER.WIDES"/>
+	</resultMap>
+	
+	<select id="retrievePlayerLiveScoreInfo" parameterType="int" resultMap="playerLiveScoreInfoResultMap">
+	    SELECT PLAYER.ID, PLAYER.POINTS, PLAYER.GOALS, PLAYER.POINTSDEADBALL, PLAYER.GOALSDEADBALL, PLAYER.WIDES  
+		FROM PROGRAMME.PLAYER
+		WHERE PLAYER.ID=#{id};
+	</select>
+	
+</mapper>

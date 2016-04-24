@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.programme.server.mapper.TeamMapper">
+	
+	<resultMap id="teamResultMap" type="com.programme.server.domain.Team">
+		<id property="id" column="TEAM.ID"/>
+		<result property="name" column="TEAM.NAME" />
+	</resultMap>
+	
+	<select id="findAll" resultMap="teamResultMap">
+    	select id, name from programme.team
+	</select>
+	
+	<select id="retrieveTeam" parameterType="int" resultMap="teamResultMap">
+	    SELECT TEAM.ID, TEAM.NAME, TEAM.POINTS, TEAM.GOALS, TEAM.POINTSDEADBALL, TEAM.GOALSDEADBALL, TEAM.WIDES   
+		FROM PROGRAMME.TEAM
+		WHERE TEAM.ID=#{id};
+	</select>
+	
+	<select id="retrieveTeamId" parameterType="String" resultType="Integer">
+	    SELECT TEAM.ID
+		FROM PROGRAMME.TEAM
+		WHERE TEAM.NAME = #{team}
+	</select>
+	
+	<update id="updateTeam" parameterType="com.programme.server.domain.Team">
+	   UPDATE PROGRAMME.TEAM SET
+		  POINTS = COALESCE(#{team.liveScoreInfo.points}, POINTS),
+		  GOALS = COALESCE(#{team.liveScoreInfo.goals}, GOALS),
+		  WIDES = COALESCE(#{team.liveScoreInfo.wides}, WIDES),
+		  GOALSDEADBALL = COALESCE(#{team.liveScoreInfo.goalsDeadBall}, GOALSDEADBALL),
+		  POINTSDEADBALL = COALESCE(#{team.liveScoreInfo.pointsDeadBall}, POINTSDEADBALL)
+		WHERE TEAM.NAME=#{team.name};
+	</update>
+	
+	<update id="updateTeamByName" parameterType="map">
+	   UPDATE PROGRAMME.TEAM SET
+		  POINTS = COALESCE(#{team.liveScoreInfo.points}, POINTS),
+		  GOALS = COALESCE(#{team.liveScoreInfo.goals}, GOALS),
+		  WIDES = COALESCE(#{team.liveScoreInfo.wides}, WIDES),
+		  GOALSDEADBALL = COALESCE(#{team.liveScoreInfo.goalsDeadBall}, GOALSDEADBALL),
+		  POINTSDEADBALL = COALESCE(#{team.liveScoreInfo.pointsDeadBall}, POINTSDEADBALL)
+		WHERE TEAM.NAME=#{teamName};
+	</update>
+	
+</mapper>

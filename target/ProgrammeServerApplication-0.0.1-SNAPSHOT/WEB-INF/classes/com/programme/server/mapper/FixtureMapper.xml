@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.programme.server.mapper.FixtureMapper">
+    
+    <resultMap id="fixtureResultMap" type="Fixture">
+		<id property="id" column="FIXTURE.ID" />
+		<result property="homeTeamId" column="FIXTURE.HOMETEAMID"/>
+		<result property="awayTeamId" column="FIXTURE.AWAYTEAMID"/>
+		<result property="venue" column="FIXTURE.VENUE" />
+		<result property="throwIn" column="FIXTURE.THROWIN" />
+		<result property="competition" column="FIXTURE.COMPETITION" />
+		<result property="referee" column="FIXTURE.REFEREE" />
+		<result property="date" column="FIXTURE.DATE"/>
+	</resultMap>
+    
+    <select id="retrieveAllFixtures" parameterType="date" resultMap="fixtureResultMap">
+	    SELECT FIXTURE.ID, FIXTURE.HOMETEAMID, FIXTURE.AWAYTEAMID, FIXTURE.VENUE, FIXTURE.THROWIN, FIXTURE.COMPETITION, FIXTURE.REFEREE, FIXTURE.DATE
+	    FROM PROGRAMME.FIXTURE
+	    WHERE FIXTURE.DATE = #{date};
+	</select>
+</mapper>

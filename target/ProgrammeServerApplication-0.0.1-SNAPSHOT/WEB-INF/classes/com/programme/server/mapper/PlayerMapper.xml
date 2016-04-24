@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.programme.server.mapper.PlayerMapper">
+   
+	<resultMap id="playerResultMap" type="Player">
+		<id property="id" column="PLAYER.ID" />
+		<result property="firstName" column="PLAYER.FIRSTNAME" />
+		<result property="lastName" column="PLAYER.LASTNAME" />
+		<result property="county" column="PLAYER.COUNTY" />
+		<result property="club" column="PLAYER.CLUB" />
+		<result property="dateOfBirth" column="PLAYER.DATEOFBIRTH" />
+		<result property="number" column="PLAYER.NUMBER"/>
+	</resultMap>
+	
+	<select id="retrievePlayers" parameterType="int" resultMap="playerResultMap">
+	    SELECT PLAYER.ID, PLAYER.FIRSTNAME, PLAYER.LASTNAME, PLAYER.COUNTY, PLAYER.CLUB, PLAYER.DATEOFBIRTH, PLAYER.NUMBER  
+		FROM PROGRAMME.PLAYER
+		WHERE PLAYER.TEAM_ID=#{id};
+	</select>
+	
+	<select id="retrievePlayer" parameterType="map" resultMap="playerResultMap">
+	    SELECT PLAYER.ID, PLAYER.FIRSTNAME, PLAYER.LASTNAME, PLAYER.COUNTY, PLAYER.CLUB, PLAYER.DATEOFBIRTH, PLAYER.NUMBER  
+		FROM PROGRAMME.PLAYER
+		WHERE PLAYER.FIRSTNAME=#{firstName}
+		AND PLAYER.LASTNAME=#{lastName}
+		AND PLAYER.COUNTY=#{team};
+	</select>
+	
+</mapper>
