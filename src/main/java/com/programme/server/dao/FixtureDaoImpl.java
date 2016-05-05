@@ -19,7 +19,7 @@ public class FixtureDaoImpl implements FixtureDao{
 	
 	@Override
 	public List<Fixture> retrieveAllFixtures(Date date) {
-		return fixtureMapper.retrieveAllFixtures(date);
+		return fixtureMapper.retrieveAllFixtures(date, 6);
 	}
 
 	@Override
