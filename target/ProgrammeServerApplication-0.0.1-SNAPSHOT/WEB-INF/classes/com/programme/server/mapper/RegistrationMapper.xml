@@ -6,6 +6,14 @@
 	
 	<insert id="sendTokenToServer" parameterType="String">
 	    INSERT INTO PROGRAMME.REGISTRATION (TOKEN)
-	    VALUES (#{token});
+	    SELECT #{token}
+	    WHERE
+	    	NOT EXISTS(
+	    		SELECT #{token} FROM PROGRAMME.REGISTRATION WHERE (TOKEN) = #{token}
+	    	);
 	</insert>
+	
+	<select id="retrieveAllTokens" resultType="string">
+	    SELECT TOKEN FROM PROGRAMME.REGISTRATION;
+	</select>
 </mapper>

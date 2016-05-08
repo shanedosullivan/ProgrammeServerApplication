@@ -5,7 +5,7 @@
 <mapper namespace="com.programme.server.mapper.FixtureMapper">
     
     <resultMap id="fixtureResultMap" type="Fixture">
-		<id property="id" column="FIXTURE.ID" />
+		<id property="id" column="ID" />
 		<result property="homeTeamId" column="FIXTURE.HOMETEAMID"/>
 		<result property="awayTeamId" column="FIXTURE.AWAYTEAMID"/>
 		<result property="venue" column="FIXTURE.VENUE" />
@@ -15,9 +15,15 @@
 		<result property="date" column="FIXTURE.DATE"/>
 	</resultMap>
     
-    <select id="retrieveAllFixtures" parameterType="date" resultMap="fixtureResultMap">
+    <select id="retrieveAllFixtures" parameterType="map" statementType="CALLABLE" resultMap="fixtureResultMap">
+			{CALL  programme.get_all_fixtures_within_days(#{date, mode=IN, jdbcType=DATE}, #{noOfDays, mode=IN, jdbcType=INTEGER})}
+	</select>
+	
+    <select id="retrieveFixtureByTeamName" parameterType="map" resultMap="fixtureResultMap">
 	    SELECT FIXTURE.ID, FIXTURE.HOMETEAMID, FIXTURE.AWAYTEAMID, FIXTURE.VENUE, FIXTURE.THROWIN, FIXTURE.COMPETITION, FIXTURE.REFEREE, FIXTURE.DATE
 	    FROM PROGRAMME.FIXTURE
-	    WHERE FIXTURE.DATE = #{date};
+	    WHERE FIXTURE.DATE = #{date} 
+	    AND FIXTURE.HOMETEAMID = #{homeTeamId} 
+	    AND FIXTURE.AWAYTEAMID = #{awayTeamId};
 	</select>
 </mapper>
